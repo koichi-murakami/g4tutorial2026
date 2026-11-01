@@ -1,0 +1,41 @@
+
+# 1. 粒子種で色分けするモデルを作成
+/vis/modeling/trajectories/create/drawByParticleID
+
+# 2. proton: red, alpha: blue, ion: grey, neutron; orage
+/vis/modeling/trajectories/drawByParticleID-0/set proton red
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron orange
+/vis/modeling/trajectories/drawByParticleID-0/set alpha blue
+/vis/modeling/trajectories/drawByParticleID-0/set ion grey
+
+
+# 1. 粒子フィルタを作成
+/vis/filtering/trajectories/create/particleFilter
+
+# 2. 表示したい粒子をリストに追加
+/vis/filtering/trajectories/particleFilter-0/add ion
+/vis/filtering/trajectories/particleFilter-0/add proton
+/vis/filtering/trajectories/particleFilter-0/add alpha
+# too many neutrans tracks
+#/vis/filtering/trajectories/particleFilter-0/add neutron
+
+# 3. 「追加した粒子以外を表示しない」設定を適用
+# (デフォルトで false なので、追加した粒子のみが表示されます)
+/vis/filtering/trajectories/particleFilter-0/invert false
+
+
+# view projection on YZ plane
+/vis/viewer/set/viewpointVector 1 0 0
+
+## particle
+/gun/particle proton
+/gun/position 0. 0. -15. cm
+/gun/direction 0. 0. 1.
+/gun/energy 200 MeV
+/tracking/verbose 0
+/run/beamOn 100
+
+# Dump scorers to a file
+#/score/dumpQuantityToFile boxMesh_1 dDep carbonDose.csv
+#/score/dumpQuantityToFile boxMesh_1 eDep carbonEdeposit.csv
+
